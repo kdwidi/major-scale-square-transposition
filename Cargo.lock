@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "diatonic_st"
+name = "major_scale_square_transposition"
 version = "0.1.0"

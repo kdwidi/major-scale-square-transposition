@@ -1,10 +1,10 @@
-use diatonic_st::*;
+use major_scale_square_transposition::*;
 
 fn main() {
-    let plaintext = str_to_binary("FTI UKSW");
-    // let plaintext = (0..64).collect::<Vec<u8>>();
+    // let plaintext = str_to_binary("FTI UKSW");
+    let plaintext = (0..64).collect::<Vec<u8>>();
 
-    let patterns = [PATTERN_1, PATTERN_2, PATTERN_3];
+    let patterns = [PATTERN_1, PATTERN_2, PATTERN_3, PATTERN_4];
 
     for (i, c) in patterns.iter().enumerate() {
         for (j, c2) in patterns.iter().enumerate() {
@@ -12,23 +12,14 @@ fn main() {
                 continue;
             }
 
-            println!("===   COMBINATION {} & {}   ===", i + 1, j + 1);
-            println!("PLAINTEXT");
-            print_bits(&plaintext);
-            println!();
-
             let entry_scheme = entry_scheme(&plaintext, c);
-            println!("ENTRY SCHEME");
-            print_bits(&entry_scheme);
-            println!();
-
             let retrieval_scheme = retrieval_scheme(&entry_scheme, c2);
-            println!("RETRIEVAL SCHEME");
-            print_bits(&retrieval_scheme);
-            println!();
-
-            println!("TESTS:");
-            monobit_test(&retrieval_scheme);
+            println!(
+                "PLAINTEXT\t\t\t   ENTRY SCHEME {}\t\t     RETRIEVAL SCHEME {}",
+                i + 1,
+                j + 1
+            );
+            print_all(&plaintext, &entry_scheme, &retrieval_scheme);
         }
     }
 }
@@ -62,7 +53,7 @@ fn str_to_binary(input: &str) -> Vec<u8> {
 
 fn print_bits(bits: &[u8]) {
     for (i, bit) in bits.iter().enumerate() {
-        print!("{bit: >3},");
+        print!("{bit},");
         if i > 0 && (i + 1) % 8 == 0 {
             println!();
         }
